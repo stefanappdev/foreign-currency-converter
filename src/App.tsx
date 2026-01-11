@@ -8,36 +8,72 @@ import './styles/App.css'
 
 const [baseCurrency,setBaseCurrency]=useState('');
 const [destCurrency,setDestCurrency]=useState('');
-const [baseCurrencyValue,setBaseCurrencyValue]=useState(null);
-const [destCurrencyValue,setDestCurrencyValue]=useState(null);
-const [rates,setRates]=useState(null);
+const baseCurrInputRef=useRef(null);
+const destCurrInputRef=useRef(null);
+const destCurrRef=useRef(null)
+const baseCurrRef=useRef(null)
+const [baseCurrencyActive,isbaseCurrencyActive]=useState(false);
+const [currencyRateActive,isCurrencyRateActive]=useState(false)
+const currencyRates=useRef(null);
 
  useEffect(()=>{
         
         fetchCurrencyAPI(apiURL,baseCurrency)
+       
       
-      },[baseCurrency])
+      },[baseCurrency]
+    )
     
-
+ 
 
 const handleSrcCurrencyChange=(e)=>{
-    if(e.target.value===''){
-      return
-    }else{
+    if(e.target.value!==''){
       setBaseCurrency(e.target.value)
-      console.log(rates)
-    }  
+      baseCurrRef.current=e.target.value;
+      isbaseCurrencyActive(true);
+      isCurrencyRateActive(true);
+      console.log(baseCurrRef.current)
      
-}
+    }else{
+      isbaseCurrencyActive(false);
+      isCurrencyRateActive(false);
+    }
+  }
 
 const handleDestCurrencyChange=(e)=>{
-    if(e.target.value===''){
-      return
-    }else{
-      
-      
-  }
+    if(e.target.value!==''){
+       console.log(currencyRates)
+       let key=e.target.value;
+
+
+       if(currencyRates.current){
+        let value=currencyRates.current[key];
+
+              if(currencyRates.current[key]!==''){
+                setDestCurrency(key)
+                destCurrRef.current={desination_currency:key,value:value};
+                console.log(destCurrRef.current)
+              }
+
+
+       }
+       
+    
+    }
 }
+
+
+const handleSrcCurrencyInputChange=(e)=>{
+  
+
+}
+
+
+const handleDestCurrencyInputChange=(e)=>{
+  
+
+}
+
 
 let apiURL='https://api.frankfurter.dev/v1/latest'
 
@@ -53,7 +89,7 @@ const fetchCurrencyAPI= async (url:string,src_currency?:string)=>{
             }else{
                       
                 response.json().then(data=>{
-                    setRates(data.rates)
+                    currencyRates.current=data.rates
                         })
                 }
 
@@ -74,7 +110,7 @@ const fetchCurrencyAPI= async (url:string,src_currency?:string)=>{
 
         
 
-         <div className='currency-input-container'>
+         <div id='src-currency-container' className='currency-input-container'>
 
           <label htmlFor='source-currency'>
             <strong>From: </strong>
@@ -82,12 +118,12 @@ const fetchCurrencyAPI= async (url:string,src_currency?:string)=>{
 
          
 
-            <select onChange={handleSrcCurrencyChange}  id='source-currency'>
+            <select  onChange={handleSrcCurrencyChange}  id='source-currency'>
               <option value=''>---SELECT---</option>
-              <option value='USD'>US</option>
-              <option value='GBP'>British</option>
-              <option value='CAD'>Canadian</option>
-              <option value='CNY'>Chinese</option>
+              <option value='USD'>US(USD)</option>
+              <option value='GBP'>British(GBP)</option>
+              <option value='CAD'>Canadian(CAD)</option>
+              <option value='CNY'>Chinese(CNY)</option>
               
             </select>
 
@@ -95,23 +131,28 @@ const fetchCurrencyAPI= async (url:string,src_currency?:string)=>{
 
             <input 
               
-              value={baseCurrencyValue}
+              ref={baseCurrInputRef}
               className='currency-inputs' 
               type='text' 
               placeholder=' $ 0.00'
+              onChange={handleSrcCurrencyInputChange}
             />
         
            </div>
 
            
 
-            <img id='reversible-arrow-img'  alt='click here swap your currencies'  src='public/images/reversible-arrow.svg'/> 
+          {baseCurrencyActive&&currencyRateActive?<img 
+            id='reversible-arrow-img'  
+            alt='click here swap your currencies'  
+            src='public/images/reversible-arrow.svg'
+            />:''}
 
           
           
           
           
-          <div className='currency-input-container'>
+          {baseCurrencyActive&&currencyRateActive?<div id='dest-currency-container' className='currency-input-container'>
 
             <label htmlFor='destination-currency'>
                <strong>To: </strong>
@@ -119,10 +160,10 @@ const fetchCurrencyAPI= async (url:string,src_currency?:string)=>{
 
               <select onChange={handleDestCurrencyChange} id='destination-currency'>
                 <option>---SELECT---</option>
-              <option value='USD'>US</option>
-              <option value='GBP'>British</option>
-              <option value='CAD'>Canadian</option>
-              <option value='CNY'>Chinese</option>
+              <option value='USD'>US(USD)</option>
+              <option value='GBP'>British(GBP)</option>
+              <option value='CAD'>Canadian(CAD)</option>
+              <option value='CNY'>Chinese(CNY)</option>
               </select>
 
               
@@ -131,11 +172,14 @@ const fetchCurrencyAPI= async (url:string,src_currency?:string)=>{
                 className='currency-inputs' 
                 type='text' 
                 placeholder='$ 0.00'
-                value={destCurrencyValue}
-
+                ref={destCurrInputRef}
+                onChange={handleDestCurrencyInputChange}
               />
             
-          </div>
+          </div>:""}
+
+
+
       </div>
     </div>
   )
