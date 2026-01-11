@@ -1,8 +1,57 @@
 *{
     padding: 0;
     margin: 0;
-    background-color: antiquewhite ;    
+  
+}
+
+
+#app{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    margin:20px;
+    padding: 5px;
+    background-color: rgb(31, 117, 174); 
+    height:100vh;
+}
+
+#app-title{
+color:whitesmoke;
+}
+
+#app-tagline{
+    font-weight: bold;
+    font-size: large;
+    font-style: italic;
+    color:whitesmoke;
+}
+
+#conversion-window{
+    margin: 50px 0;
+    padding: 2px;
+    background-color: #CEDAD1;
+    border-radius: 5px;
 }
 
 
 
+
+#reversible-arrow-img{
+width: 50px;
+height: 40px;
+margin: 20px 200px;
+
+}
+
+#conversion-window>.currency-input-container{
+    margin:20px;
+    padding: 10px;
+}
+
+
+.currency-inputs{
+    margin:0 20px;
+    height: 20px;
+    width: 200px; 
+}
