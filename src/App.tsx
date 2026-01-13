@@ -7,78 +7,27 @@ import './styles/App.css'
  function App() {
 
 const [baseCurrency,setBaseCurrency]=useState('');
-const [destCurrency,setDestCurrency]=useState('');
-const baseCurrInputRef=useRef(null);
-const destCurrInputRef=useRef(null);
+const [destCurrency,setDestCurrency]=useState('')
+let apiURL='https://api.frankfurter.dev/v1/latest'
+const calcbtnRef=useRef(null)
+const baseCurrencyInputRef=useRef(null)
+const [baseCurrAmt,setbaseCurrAmt]=useState();
+const[destCurrAmt,setdestCurrAmt]=useState();
+const[showInput,setShowInput]=useState(false)
 const destCurrRef=useRef(null)
 const baseCurrRef=useRef(null)
-const [baseCurrencyActive,isbaseCurrencyActive]=useState(false);
-const [currencyRateActive,isCurrencyRateActive]=useState(false)
 const currencyRates=useRef(null);
-
- useEffect(()=>{
-        
-        fetchCurrencyAPI(apiURL,baseCurrency)
-       
-      
-      },[baseCurrency]
-    )
-    
- 
-
-const handleSrcCurrencyChange=(e)=>{
-    if(e.target.value!==''){
-      setBaseCurrency(e.target.value)
-      baseCurrRef.current=e.target.value;
-      isbaseCurrencyActive(true);
-      isCurrencyRateActive(true);
-      console.log(baseCurrRef.current)
-     
-    }else{
-      isbaseCurrencyActive(false);
-      isCurrencyRateActive(false);
-    }
-  }
-
-const handleDestCurrencyChange=(e)=>{
-    if(e.target.value!==''){
-       console.log(currencyRates)
-       let key=e.target.value;
+const baseCurrencySelectBoxRef=useRef(null);
+const destCurrencySelectBoxRef=useRef(null);
+const [showResult,setShowResult]=useState(false);
 
 
-       if(currencyRates.current){
-        let value=currencyRates.current[key];
-
-              if(currencyRates.current[key]!==''){
-                setDestCurrency(key)
-                destCurrRef.current={desination_currency:key,value:value};
-                console.log(destCurrRef.current)
-              }
 
 
-       }
-       
-    
-    }
-}
 
-
-const handleSrcCurrencyInputChange=(e)=>{
-  
-
-}
-
-
-const handleDestCurrencyInputChange=(e)=>{
-  
-
-}
-
-
-let apiURL='https://api.frankfurter.dev/v1/latest'
 
 const fetchCurrencyAPI= async (url:string,src_currency?:string)=>{
-  
+  //fetch data from opensource foreign currency API 
   
   
   src_currency? url=url+`?base=${src_currency}`:src_currency;  
@@ -93,11 +42,130 @@ const fetchCurrencyAPI= async (url:string,src_currency?:string)=>{
                         })
                 }
 
-    }catch(error){
-                  console.error(error)
+    }catch(err){
+                  throw new Error(err.toString())
     }           
 
   }
+
+
+
+
+const handleSrcCurrencyChange=(e):void=>{
+
+  /*handles select/dropdown for source(base) currency if 
+  it has a option with a value and sets it as the source currency
+  as well as storing the exchange rates relative to that source currency
+    */
+    if(e.target.value!==''){
+      setBaseCurrency(e.target.value)
+      setShowInput(true)
+      baseCurrRef.current=e.target.value;
+     
+      console.log(baseCurrRef.current)
+     
+    }else{
+      
+      setShowInput(false)
+      setbaseCurrAmt(0)
+      setdestCurrAmt(0)
+      setDestCurrency('')
+      setBaseCurrency("")
+    }
+  }
+
+const handleDestCurrencyChange=(e):void=>{
+
+   /*handles select/dropdown for destination currency if 
+  it has a option with a value,sets it as the destination currency
+  and retrives its exchange rate relative to the source currency
+    */
+    if(e.target.value!==''){
+       console.log(currencyRates)
+       let key:string=e.target.value;
+
+
+       if(currencyRates.current){
+        let value:number=currencyRates.current[key];
+
+              if(currencyRates.current[key]!==''){
+                setDestCurrency(key)
+                destCurrRef.current={desination_currency:key,currency_value:value};
+                console.log(destCurrRef.current)
+                setdestCurrAmt(destCurrRef.current.currency_value*baseCurrAmt)
+              }
+
+
+       }
+       
+    
+    }
+}
+
+
+const calculateCurrencyValues=():void=>{
+      ///compare flat rates of base and destinataion currency 
+      if(baseCurrAmt>0){
+
+      
+      let rate_dest:number=destCurrRef.current.currency_value;
+      let total_dest_amt:number=(rate_dest*baseCurrAmt);
+      setdestCurrAmt(total_dest_amt)
+      calcbtnRef.current.disabled=true;
+      baseCurrencyInputRef.current.disabled=true;
+      baseCurrencySelectBoxRef.current.disabled=true;
+      destCurrencySelectBoxRef.current.disabled=true;
+      setShowResult(true)
+      }else{
+        return
+      }
+
+}
+
+const clear=():void=>{
+  setbaseCurrAmt()
+  setdestCurrAmt()
+  calcbtnRef.current.disabled=false;
+  baseCurrencyInputRef.current.disabled=false;
+  baseCurrencySelectBoxRef.current.disabled=false;
+  destCurrencySelectBoxRef.current.disabled=false;
+  setShowResult(false)
+}
+
+
+
+
+const handleSrcCurrencyInputChange=(event)=>{
+  if(event.target.value>=0 && destCurrRef.current.desination_currency!==""){
+    setbaseCurrAmt(event.target.value)
+
+  }else{
+    return
+  }
+  
+
+}
+
+
+
+
+
+
+ useEffect(()=>{
+        
+        fetchCurrencyAPI(apiURL,baseCurrency)
+        
+      
+      },[baseCurrency]
+
+    )
+    
+ 
+
+
+
+
+
  
   return (
     <div id='app'>
@@ -118,7 +186,7 @@ const fetchCurrencyAPI= async (url:string,src_currency?:string)=>{
 
          
 
-            <select  onChange={handleSrcCurrencyChange}  id='source-currency'>
+            <select  onChange={handleSrcCurrencyChange} ref={baseCurrencySelectBoxRef} id='source-currency'>
               <option value=''>---SELECT---</option>
               <option value='USD'>US(USD)</option>
               <option value='GBP'>British(GBP)</option>
@@ -129,57 +197,55 @@ const fetchCurrencyAPI= async (url:string,src_currency?:string)=>{
 
             
 
-            <input 
-              
-              ref={baseCurrInputRef}
+            {baseCurrency&&destCurrency?<input 
+              ref={baseCurrencyInputRef}
+              value={baseCurrAmt}
               className='currency-inputs' 
-              type='text' 
-              placeholder=' $ 0.00'
+              type='number'
               onChange={handleSrcCurrencyInputChange}
-            />
+            />:''}
         
            </div>
 
-           
-
-          {baseCurrencyActive&&currencyRateActive?<img 
-            id='reversible-arrow-img'  
-            alt='click here swap your currencies'  
-            src='public/images/reversible-arrow.svg'
-            />:''}
 
           
           
           
           
-          {baseCurrencyActive&&currencyRateActive?<div id='dest-currency-container' className='currency-input-container'>
+          {baseCurrency?<div id='dest-currency-container' className='currency-input-container'>
 
             <label htmlFor='destination-currency'>
                <strong>To: </strong>
             </label>
 
-              <select onChange={handleDestCurrencyChange} id='destination-currency'>
-                <option>---SELECT---</option>
-              <option value='USD'>US(USD)</option>
-              <option value='GBP'>British(GBP)</option>
-              <option value='CAD'>Canadian(CAD)</option>
-              <option value='CNY'>Chinese(CNY)</option>
+              <select onChange={handleDestCurrencyChange} ref={destCurrencySelectBoxRef} id='destination-currency-selectbox'>
+              <option value=''> ---SELECT--- </option>
+              {baseCurrRef.current==='USD'?'':<option value='USD'>US(USD)</option>}
+              {baseCurrRef.current==='GBP'?'': <option value='GBP'>British(GBP)</option>}
+              {baseCurrRef.current==='CAD'?'':<option value='CAD'>Canadian(CAD)</option>}
+              {baseCurrRef.current==='CNY'?'':<option value='CNY'>Chinese(CNY)</option>}
               </select>
 
-              
-
-              <input 
-                className='currency-inputs' 
-                type='text' 
-                placeholder='$ 0.00'
-                ref={destCurrInputRef}
-                onChange={handleDestCurrencyInputChange}
-              />
+              {showResult?<span id='dest-currency-total'>
+                  <strong>{baseCurrAmt+' '+baseCurrency+'='+destCurrAmt+' '+destCurrency }</strong>
+                </span>:""}
             
           </div>:""}
+            
 
 
 
+            <footer id='footer'>
+
+
+                <div id='btns-container'>
+
+                    {baseCurrency&&destCurrency?<button id='calcBtn' ref={calcbtnRef} className='buttons' onClick={calculateCurrencyValues}>Calculate</button>:""}
+                    {baseCurrency&&destCurrency?<button id='clearBtn' className='buttons' onClick={clear}>Clear</button>:''}
+                </div>
+
+            </footer>
+          
       </div>
     </div>
   )
