@@ -13,7 +13,6 @@ const calcbtnRef=useRef(null)
 const baseCurrencyInputRef=useRef(null)
 const [baseCurrAmt,setbaseCurrAmt]=useState();
 const[destCurrAmt,setdestCurrAmt]=useState();
-const[showInput,setShowInput]=useState(false)
 const destCurrRef=useRef(null)
 const baseCurrRef=useRef(null)
 const currencyRates=useRef(null);
@@ -58,15 +57,18 @@ const handleSrcCurrencyChange=(e):void=>{
   as well as storing the exchange rates relative to that source currency
     */
     if(e.target.value!==''){
-      setBaseCurrency(e.target.value)
-      setShowInput(true)
-      baseCurrRef.current=e.target.value;
+      let regExp=/a-zA-Z/;
+
+      if (!regExp.test(e.target.value)){
+         setBaseCurrency(e.target.value)
+         baseCurrRef.current=e.target.value;
+    
+      }else{return}
      
-      console.log(baseCurrRef.current)
      
     }else{
       
-      setShowInput(false)
+
       setbaseCurrAmt(0)
       setdestCurrAmt(0)
       setDestCurrency('')
@@ -81,7 +83,7 @@ const handleDestCurrencyChange=(e):void=>{
   and retrives its exchange rate relative to the source currency
     */
     if(e.target.value!==''){
-       console.log(currencyRates)
+       
        let key:string=e.target.value;
 
 
@@ -91,7 +93,6 @@ const handleDestCurrencyChange=(e):void=>{
               if(currencyRates.current[key]!==''){
                 setDestCurrency(key)
                 destCurrRef.current={desination_currency:key,currency_value:value};
-                console.log(destCurrRef.current)
                 setdestCurrAmt(destCurrRef.current.currency_value*baseCurrAmt)
               }
 
@@ -127,6 +128,7 @@ const clear=():void=>{
   setdestCurrAmt()
   calcbtnRef.current.disabled=false;
   baseCurrencyInputRef.current.disabled=false;
+  baseCurrencyInputRef.current.value='';
   baseCurrencySelectBoxRef.current.disabled=false;
   destCurrencySelectBoxRef.current.disabled=false;
   setShowResult(false)
@@ -197,13 +199,21 @@ const handleSrcCurrencyInputChange=(event)=>{
 
             
 
-            {baseCurrency&&destCurrency?<input 
+            {baseCurrency&&destCurrency?
+            <>
+  
+              <input 
               ref={baseCurrencyInputRef}
               value={baseCurrAmt}
               className='currency-inputs' 
-              type='number'
+              type='text'
+              placeholder='Enter the amount to convert here'
+              id='baseCurrencyAmt'
               onChange={handleSrcCurrencyInputChange}
-            />:''}
+            />
+            
+            
+            </>:''}
         
            </div>
 

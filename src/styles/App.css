@@ -1,6 +1,8 @@
 *{
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
   
 }
 
@@ -8,91 +10,185 @@
 @media screen and (max-width:700px) {
     
 
-#app{
-    display:flex;
-    flex-direction: column;
-    align-items:center;
-    justify-content: center;
-    margin:20px;
-    padding: 5px;
-    background-color: rgb(31, 117, 174); 
-    height:100vh;
-}
+    #app{
+        display:flex;
+        flex-direction: column;
+        align-items:center;
+        justify-content: center;
+        margin:20px;
+        padding: 5px;
+        background-color: rgb(31, 117, 174); 
+        height:100vh;
+    }
 
-#app-title{
-color:whitesmoke;
-}
-
-#app-tagline{
-    font-weight: bold;
-    font-size: large;
-    font-style: italic;
+    #app-title{
     color:whitesmoke;
-}
+    }
 
-#conversion-window{
-    margin: 50px 0;
-    padding: 2px;
-    background-color: #CEDAD1;
-    border-radius: 5px;
-}
+    #app-tagline{
+        font-weight: bold;
+        font-size: large;
+        font-style: italic;
+        color:whitesmoke;
+    }
 
-
-
-
-#reversible-arrow-img{
-width: 50px;
-height: 40px;
-margin: 20px 200px;
-
-}
-
-#conversion-window>.currency-input-container{
-    margin:20px;
-    padding: 10px;
-}
+    #conversion-window{
+        margin: 50px 0;
+        padding: 2px;
+        background-color: #CEDAD1;
+        border-radius: 5px;
+    }
 
 
-.currency-inputs{
-    margin:0 20px;
-    height: 20px;
-    width: 200px; 
-}
 
-#btns-container{
-  padding:5px;
-  margin: 0 10px 0 2px;
-}
 
-#footer{
-    display:flex;
-    justify-content:flex-end ;
-}
-
-.buttons{
-     
-    margin:0 5px 0 5px;
-    border-radius: 5px;
-    border-style: none;
-    font-weight: bold;
+    #reversible-arrow-img{
+    width: 50px;
     height: 40px;
-    width: 75px;
-    cursor:pointer;
-    color: white;
+    margin: 20px 200px;
+
+    }
+
+    #conversion-window>.currency-input-container{
+        margin:20px;
+        padding: 10px;
+    }
+
+
+    .currency-inputs{
+        margin:0 20px;
+        height: 20px;
+        width: 200px; 
+    }
+
+    #btns-container{
+    padding:5px;
+    margin: 0 10px 0 2px;
+    }
+
+    #footer{
+        display:flex;
+        justify-content:flex-end ;
+    }
+
+    .buttons{
+        
+        margin:0 5px 0 5px;
+        border-radius: 5px;
+        border-style: none;
+        font-weight: bold;
+        height: 40px;
+        width: 75px;
+        cursor:pointer;
+        color: white;
+    }
+
+
+    #dest-currency-total{
+        margin-left:30px;
+
+    }
+
+    #clearBtn{
+    background-color:red ;
+    }
+
+    #calcBtn{
+    background-color:rgb(18, 110, 49);
+    }
+
 }
 
 
-#dest-currency-total{
-    margin-left:30px;
+@media screen and (max-width:1500px) {
+
+
+    #app{
+        display:flex;
+        flex-direction: column;
+        align-items:center;
+        justify-content: center;
+        margin:20px;
+        padding: 5px;
+        background-color: rgb(31, 117, 174); 
+        height:100vh;
+    }
+
+    #app-title{
+    color:whitesmoke;
+    }
+
+    #app-tagline{
+        font-weight: bold;
+        font-size: large;
+        font-style: italic;
+        color:whitesmoke;
+    }
+
+    #conversion-window{
+        margin: 50px 0;
+        padding: 2px;
+        background-color: #CEDAD1;
+        border-radius: 5px;
+    }
+
+
+
+
+    #reversible-arrow-img{
+    width: 50px;
+    height: 40px;
+    margin: 20px 200px;
+
+    }
+
+    #conversion-window>.currency-input-container{
+        margin:20px;
+        padding: 10px;
+    }
+
+
+    .currency-inputs{
+        margin:0 20px;
+        height: 20px;
+        width: 200px; 
+    }
+
+    #btns-container{
+    padding:5px;
+    margin: 0 10px 0 2px;
+    }
+
+    #footer{
+        display:flex;
+        justify-content:flex-end ;
+    }
+
+    .buttons{
+        
+        margin:0 5px 0 5px;
+        border-radius: 5px;
+        border-style: none;
+        font-weight: bold;
+        height: 40px;
+        width: 75px;
+        cursor:pointer;
+        color: white;
+    }
+
+
+    #dest-currency-total{
+        margin-left:30px;
+
+    }
+
+    #clearBtn{
+    background-color:red ;
+    }
+
+    #calcBtn{
+    background-color:rgb(18, 110, 49);
+    }
 
 }
 
-#clearBtn{
-background-color:red ;
-}
-
-#calcBtn{
-background-color:rgb(18, 110, 49);
-}
-
-}
