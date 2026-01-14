@@ -7,7 +7,7 @@
 }
 
 
-@media screen and (max-width:700px) {
+@media screen and (min-width:300px) {
     
 
     #app{
@@ -15,51 +15,66 @@
         flex-direction: column;
         align-items:center;
         justify-content: center;
-        margin:20px;
-        padding: 5px;
-        background-color: rgb(31, 117, 174); 
+        width:100%;
+        padding:20px;
+        background-color:  rgb(102, 247, 97); 
         height:100vh;
     }
 
     #app-title{
-    color:whitesmoke;
+    color:rgb(24, 12, 12);
+    font-weight: bold;
+    max-width: 300px;
+    font-size: x-large;
     }
 
     #app-tagline{
-        font-weight: bold;
-        font-size: large;
+        
+        font-size: medium;
         font-style: italic;
-        color:whitesmoke;
+        color:rgb(24, 12, 12);
     }
 
     #conversion-window{
-        margin: 50px 0;
-        padding: 2px;
-        background-color: #CEDAD1;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:center;
+        margin: 10px;
+        width: 85%;
+        padding: 20px;
+        background-color: #ecf8ef;
         border-radius: 5px;
     }
 
-
-
-
-    #reversible-arrow-img{
-    width: 50px;
-    height: 40px;
-    margin: 20px 200px;
-
+    #baseCurrencyAmt{
+        margin: 10px 0;
+        border: solid 1px black;
+        border-radius: 2px;
+        width: 150px;
     }
+
+
+    #baseCurrencyAmt:focus{
+        background-color: rgb(130, 184, 245);
+    }
+
+
 
     #conversion-window>.currency-input-container{
-        margin:20px;
-        padding: 10px;
+        margin:0 0 10px 0;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
-
-    .currency-inputs{
-        margin:0 20px;
-        height: 20px;
-        width: 200px; 
+    #app-logo{
+        border-radius: 50%;
+        width: 200px;
+        height: 50px
     }
+   
 
     #btns-container{
     padding:5px;
@@ -68,12 +83,15 @@
 
     #footer{
         display:flex;
-        justify-content:flex-end ;
+        flex-direction: column;
+        align-items:center;
+        margin: 10px 0;
+        justify-content:flex-end;
     }
 
     .buttons{
         
-        margin:0 5px 0 5px;
+        margin:0 15px;
         border-radius: 5px;
         border-style: none;
         font-weight: bold;
@@ -85,9 +103,12 @@
 
 
     #dest-currency-total{
-        margin-left:30px;
-
+        margin:10px auto;
+        font-size:small;
+        max-width:95%;
     }
+
+
 
     #clearBtn{
     background-color:red ;
@@ -110,38 +131,32 @@
         justify-content: center;
         margin:20px;
         padding: 5px;
-        background-color: rgb(31, 117, 174); 
+        background-color:  rgb(102, 247, 97); 
         height:100vh;
     }
 
     #app-title{
-    color:whitesmoke;
+    color:rgb(24, 12, 12);
     }
 
     #app-tagline{
         font-weight: bold;
         font-size: large;
         font-style: italic;
-        color:whitesmoke;
+        color:rgb(24, 12, 12);
     }
 
     #conversion-window{
         margin: 50px 0;
         padding: 2px;
-        background-color: #CEDAD1;
+        background-color: #ecf8ef;
         border-radius: 5px;
     }
 
 
 
 
-    #reversible-arrow-img{
-    width: 50px;
-    height: 40px;
-    margin: 20px 200px;
-
-    }
-
+    
     #conversion-window>.currency-input-container{
         margin:20px;
         padding: 10px;

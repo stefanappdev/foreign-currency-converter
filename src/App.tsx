@@ -172,7 +172,11 @@ const handleSrcCurrencyInputChange=(event)=>{
   return (
     <div id='app'>
       <h1 id='app-title'>Foreign Currency Converter</h1>
-      <span id='app-tagline'>Convert your foreign currencies here!</span>
+      <span id='app-tagline'>FX conversion in a flash!</span>
+
+
+
+      <img alt='app-logo' id='app-logo' src='/images/piggybank.svg'></img>
       
       <div id='conversion-window'>
 
@@ -207,7 +211,7 @@ const handleSrcCurrencyInputChange=(event)=>{
               value={baseCurrAmt}
               className='currency-inputs' 
               type='text'
-              placeholder='Enter the amount to convert here'
+              placeholder='Enter amount to convert'
               id='baseCurrencyAmt'
               onChange={handleSrcCurrencyInputChange}
             />
@@ -227,25 +231,22 @@ const handleSrcCurrencyInputChange=(event)=>{
             <label htmlFor='destination-currency'>
                <strong>To: </strong>
             </label>
-
               <select onChange={handleDestCurrencyChange} ref={destCurrencySelectBoxRef} id='destination-currency-selectbox'>
               <option value=''> ---SELECT--- </option>
               {baseCurrRef.current==='USD'?'':<option value='USD'>US(USD)</option>}
               {baseCurrRef.current==='GBP'?'': <option value='GBP'>British(GBP)</option>}
               {baseCurrRef.current==='CAD'?'':<option value='CAD'>Canadian(CAD)</option>}
               {baseCurrRef.current==='CNY'?'':<option value='CNY'>Chinese(CNY)</option>}
-              </select>
-
-              {showResult?<span id='dest-currency-total'>
-                  <strong>{baseCurrAmt+' '+baseCurrency+'='+destCurrAmt+' '+destCurrency }</strong>
-                </span>:""}
-            
+              </select>            
           </div>:""}
             
-
-
-
             <footer id='footer'>
+              <br/>
+
+
+               {showResult?<div id='dest-currency-total'>
+                  <strong>{baseCurrAmt+' '+baseCurrency+'='+destCurrAmt+' '+destCurrency }</strong>
+                </div>:""}
 
 
                 <div id='btns-container'>
