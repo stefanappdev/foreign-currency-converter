@@ -1,7 +1,7 @@
 Done by Stefan Mitchell
 
 Foreign currency converter App built using ReactJS and CSS.
-API endpoint used to for currency conversion rates :'https://api.frankfurter.dev/v1'
+API endpoint used to calculate foreign currency conversion rates :'https://api.frankfurter.dev/v1'
 
 
 click to view foreign currency converter app:
